@@ -2,15 +2,6 @@ theory Term
   imports Main
 begin
 
-(*
-code_printing
-    type_constructor "int" \<rightharpoonup> (SML) "int"
-  | type_constructor "nat" \<rightharpoonup> (SML) "int"
-  | constant "nth" \<rightharpoonup> (SML) "nth"
-  | constant "one_class.one :: int" \<rightharpoonup> (SML) "1"
-  | constant "Nil" \<rightharpoonup> (SML) "[]"
-*)
-
 no_notation
   implies  (infixr "-->" 25)
 
