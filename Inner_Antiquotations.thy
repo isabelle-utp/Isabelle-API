@@ -5,10 +5,11 @@ theory Inner_Antiquotations
 begin
 
 syntax
-  "_inner_const_name" :: "id \<Rightarrow> logic" ("@{const'_name _}")
-  "_inner_const_name" :: "longid \<Rightarrow> logic" ("@{const'_name _}")
-  "_inner_type_name"  :: "type \<Rightarrow> logic" ("@{type'_name _}")
-  "_inner_typ"        :: "type \<Rightarrow> logic" ("@{typ _}")
+  "_inner_const_name"  :: "id \<Rightarrow> logic" ("@{const'_name _}")
+  "_inner_const_name"  :: "longid \<Rightarrow> logic" ("@{const'_name _}")
+  "_inner_type_name"   :: "type \<Rightarrow> logic" ("@{type'_name _}")
+  "_inner_typ"         :: "type \<Rightarrow> logic" ("@{typ _}")
+  "_inner_nonterminal" :: "id \<Rightarrow> logic" ("@{nonterminal _}")
 
 parse_translation \<open>
 let
@@ -36,7 +37,11 @@ in
     fn ctx => fn terms => 
     case terms of [t] => 
       lift_typ (Syntax_Phases.decode_typ t))
-]
+  ,(@{syntax_const "_inner_nonterminal"},
+    fn ctx => fn terms => 
+    case terms of [Free (n, _)] => 
+      let val Type (n, _) = Proof_Context.read_type_name {proper = true, strict = false} ctx n
+      in HOLogic.mk_literal n end)]
 end
 \<close>
 
